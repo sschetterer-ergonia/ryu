@@ -117,6 +117,25 @@ pub unsafe fn format64(f: f64, result: *mut u8) -> usize {
     }
 }
 
+#[must_use]
+#[inline]
+#[cfg_attr(feature = "no-panic", no_panic)]
+pub fn split64(f: f64) -> FloatingDecimal64 {
+    let bits = f.to_bits();
+    let ieee_mantissa = bits & ((1u64 << DOUBLE_MANTISSA_BITS) - 1);
+    let ieee_exponent =
+        (bits >> DOUBLE_MANTISSA_BITS) as u32 & ((1u32 << DOUBLE_EXPONENT_BITS) - 1);
+
+    if ieee_exponent == 0 && ieee_mantissa == 0 {
+        return FloatingDecimal64 {
+            mantissa: 0,
+            exponent: 0,
+        };
+    }
+
+    d2d(ieee_mantissa, ieee_exponent)
+}
+
 /// Print f32 to the given buffer and return number of bytes written.
 ///
 /// At most 16 bytes will be written.
