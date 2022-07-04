@@ -120,4 +120,5 @@ pub use crate::buffer::{Buffer, Float};
 /// Unsafe functions that mirror the API of the C implementation of Ryū.
 pub mod raw {
     pub use crate::pretty::{format32, format64};
+    pub use crate::d2s::{d2d, FloatingDecimal64};
 }
