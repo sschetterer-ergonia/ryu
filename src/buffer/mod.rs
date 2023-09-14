@@ -82,6 +82,7 @@ impl Buffer {
 impl Copy for Buffer {}
 
 impl Clone for Buffer {
+    #[allow(clippy::incorrect_clone_impl_on_copy_type)]
     #[inline]
     fn clone(&self) -> Self {
         Buffer::new()
