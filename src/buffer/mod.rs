@@ -82,9 +82,12 @@ impl Buffer {
 impl Copy for Buffer {}
 
 impl Clone for Buffer {
+    //lint supported in 1.72
     #[allow(clippy::incorrect_clone_impl_on_copy_type)]
     #[inline]
-    #[allow(clippy::non_canonical_clone_impl)] // false positive https://github.com/rust-lang/rust-clippy/issues/11072
+    //this lint is marked as released in 1.72, but it is not there as of 2023Sep15
+    //https://rust-lang.github.io/rust-clippy/rust-1.72.0/index.html
+    //#[allow(clippy::non_canonical_clone_impl)] // false positive https://github.com/rust-lang/rust-clippy/issues/11072
     fn clone(&self) -> Self {
         Buffer::new()
     }
